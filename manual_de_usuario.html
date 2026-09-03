@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual de Usuario – App Recolectora NextBus</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: 10.5pt;
+      color: #1e293b;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* ─── Print ─── */
+    @media print {
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      body { font-size: 9.5pt; }
+      .cover { page-break-after: always; }
+    }
+
+    /* ─── Cover page ─── */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 60%, #2563eb 100%);
+      color: #fff;
+      text-align: center;
+      padding: 60px 40px;
+    }
+    .cover-logo {
+      width: 80px; height: 80px;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px;
+      font-size: 38px;
+    }
+    .cover-tag {
+      font-size: 9pt;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #93c5fd;
+      margin-bottom: 16px;
+    }
+    .cover h1 {
+      font-size: 34pt;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .cover h2 {
+      font-size: 16pt;
+      font-weight: 400;
+      color: #bfdbfe;
+      margin-bottom: 40px;
+    }
+    .cover-divider {
+      width: 60px; height: 3px;
+      background: #60a5fa;
+      border-radius: 2px;
+      margin: 0 auto 40px;
+    }
+    .cover-meta {
+      font-size: 10pt;
+      color: #93c5fd;
+      line-height: 2;
+    }
+    .cover-meta strong { color: #fff; }
+    .cover-footer {
+      position: absolute;
+      bottom: 40px;
+      font-size: 8pt;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+    }
+
+    /* ─── Page layout ─── */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 60px 72px;
+    }
+    @media (max-width: 900px) {
+      .page { padding: 40px 24px; }
+    }
+
+    /* ─── TOC ─── */
+    .toc-section { margin-bottom: 80px; }
+    .toc-title {
+      font-size: 22pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .toc-subtitle {
+      font-size: 10pt;
+      color: #64748b;
+      margin-bottom: 32px;
+    }
+    .toc-group { margin-bottom: 24px; }
+    .toc-group-title {
+      font-size: 8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #2563eb;
+      margin-bottom: 10px;
+    }
+    .toc-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+      text-decoration: none;
+      color: #334155;
+      font-size: 10.5pt;
+    }
+    .toc-item:hover { color: #2563eb; }
+    .toc-num {
+      display: inline-block;
+      width: 28px;
+      font-weight: 700;
+      color: #94a3b8;
+      font-size: 9pt;
+      flex-shrink: 0;
+    }
+    .toc-dots {
+      flex: 1;
+      border-bottom: 1px dotted #cbd5e1;
+      margin: 0 10px;
+      height: 0;
+      align-self: flex-end;
+      margin-bottom: 5px;
+    }
+    .toc-page { font-size: 9pt; color: #94a3b8; }
+
+    /* ─── Section header ─── */
+    .section-header {
+      padding: 48px 0 24px;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 36px;
+    }
+    .section-tag {
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 24pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .section-desc {
+      margin-top: 10px;
+      font-size: 10.5pt;
+      color: #64748b;
+      max-width: 600px;
+    }
+
+    /* ─── Module header ─── */
+    .module {
+      margin-bottom: 56px;
+    }
+    .module-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .module-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .icon-blue   { background: #dbeafe; }
+    .icon-green  { background: #dcfce7; }
+    .icon-amber  { background: #fef3c7; }
+    .icon-violet { background: #ede9fe; }
+    .icon-red    { background: #fee2e2; }
+    .icon-slate  { background: #f1f5f9; }
+    .icon-teal   { background: #ccfbf1; }
+
+    .module-meta { flex: 1; }
+    .module-number {
+      font-size: 8pt;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .module-title {
+      font-size: 16pt;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .module-subtitle {
+      font-size: 10pt;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* ─── Content blocks ─── */
+    h3 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 24px 0 12px;
+    }
+    p {
+      margin-bottom: 12px;
+      color: #334155;
+    }
+
+    /* Steps */
+    .steps { counter-reset: step; margin: 16px 0 24px; }
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .step-num {
+      counter-increment: step;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #fff;
+      font-size: 10pt;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-content { flex: 1; }
+    .step-label {
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .step-desc { font-size: 10pt; color: #475569; }
+
+    /* Fields table */
+    .fields-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 9.5pt;
+    }
+    .fields-table th {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 700;
+      color: #475569;
+      font-size: 8.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .fields-table td {
+      border: 1px solid #e2e8f0;
+      padding: 9px 12px;
+      color: #334155;
+      vertical-align: top;
+    }
+    .fields-table tr:nth-child(even) td { background: #fafafa; }
+    .required-badge {
+      display: inline-block;
+      background: #fef2f2;
+      color: #dc2626;
+      font-size: 7.5pt;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .optional-badge {
+      display: inline-block;
+      background: #f0fdf4;
+      color: #16a34a;
+      font-size: 7.5pt;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+
+    /* Info box */
+    .info-box {
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0 24px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .info-box.blue   { background: #eff6ff; border: 1px solid #bfdbfe; }
+    .info-box.amber  { background: #fffbeb; border: 1px solid #fde68a; }
+    .info-box.green  { background: #f0fdf4; border: 1px solid #bbf7d0; }
+    .info-box.red    { background: #fef2f2; border: 1px solid #fecaca; }
+    .info-box.slate  { background: #f8fafc; border: 1px solid #e2e8f0; }
+    .info-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .info-content .info-title {
+      font-weight: 700;
+      font-size: 10pt;
+      margin-bottom: 3px;
+      color: #1e293b;
+    }
+    .info-content p { margin: 0; font-size: 9.5pt; color: #475569; }
+
+    /* Callout */
+    .callout {
+      border-left: 4px solid #2563eb;
+      background: #f8fafc;
+      padding: 14px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0 24px;
+    }
+    .callout p { margin: 0; font-size: 9.5pt; }
+
+    /* Chips */
+    .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 16px; }
+    .chip {
+      display: inline-block;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 9pt;
+      font-weight: 600;
+      color: #334155;
+      background: #fff;
+    }
+    .chip.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+
+    /* Metric cards */
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 16px 0 24px;
+    }
+    .metric-card {
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .metric-card .metric-val {
+      font-size: 24pt;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .metric-card .metric-label {
+      font-size: 8pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+      opacity: 0.75;
+    }
+    .metric-blue   { background: #dbeafe; color: #1d4ed8; }
+    .metric-red    { background: #fee2e2; color: #dc2626; }
+    .metric-amber  { background: #fef3c7; color: #b45309; }
+    .metric-violet { background: #ede9fe; color: #7c3aed; }
+    .metric-green  { background: #dcfce7; color: #16a34a; }
+
+    /* Nav list */
+    .nav-list { list-style: none; margin: 8px 0 24px; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 10pt;
+      color: #334155;
+    }
+    .nav-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #2563eb;
+      flex-shrink: 0;
+    }
+    .nav-dot.green  { background: #16a34a; }
+    .nav-dot.amber  { background: #d97706; }
+    .nav-dot.violet { background: #7c3aed; }
+    .nav-dot.red    { background: #dc2626; }
+    .nav-dot.slate  { background: #64748b; }
+
+    /* Warning / notice boxes */
+    .notice {
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 9.5pt;
+    }
+    .notice.blue  { background: #eff6ff; border: 1px solid #93c5fd; color: #1d4ed8; }
+    .notice.amber { background: #fffbeb; border: 1px solid #fcd34d; color: #92400e; }
+    .notice.green { background: #f0fdf4; border: 1px solid #86efac; color: #14532d; }
+    .notice.red   { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+
+    /* ─── Footer ─── */
+    .doc-footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8.5pt;
+      color: #94a3b8;
+    }
+
+    /* ─── Screenshots ─── */
+    .screenshot-wrap {
+      margin: 20px 0 28px;
+    }
+    .screenshot-row {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin: 20px 0 28px;
+    }
+    .screenshot-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .screenshot-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .screenshot-frame {
+      border: 8px solid #1e293b;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
+      background: #fff;
+      display: inline-block;
+      position: relative;
+    }
+    .screenshot-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .screenshot-frame.size-lg { width: 220px; }
+    .screenshot-frame.size-md { width: 180px; }
+    .screenshot-frame.size-sm { width: 150px; }
+    .screenshot-caption {
+      margin-top: 10px;
+      font-size: 8.5pt;
+      color: #64748b;
+      text-align: center;
+      font-style: italic;
+    }
+    .screenshot-label {
+      display: inline-block;
+      background: #1e293b;
+      color: #fff;
+      font-size: 7.5pt;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    /* Layout: image left + text right */
+    .content-with-image {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      margin: 16px 0 24px;
+    }
+    .content-with-image .img-side { flex-shrink: 0; }
+    .content-with-image .text-side { flex: 1; }
+    @media print {
+      .screenshot-frame { box-shadow: none; border-color: #334155; }
+      .screenshot-frame.size-lg { width: 180px; }
+      .screenshot-frame.size-md { width: 150px; }
+    }
+
+    /* ─── Annotation overlays ─── */
+    .screenshot-frame { position: relative; }
+    .ann-box {
+      position: absolute;
+      border-radius: 5px;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+    .ann-box.red    { border: 2.5px solid #ef4444; }
+    .ann-box.blue   { border: 2.5px solid #2563eb; }
+    .ann-box.green  { border: 2.5px solid #16a34a; }
+    .ann-box.amber  { border: 2.5px solid #d97706; }
+    .ann-box.violet { border: 2.5px solid #7c3aed; }
+    .ann-badge {
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 7.5px; font-weight: 800; color: #fff;
+      line-height: 1;
+    }
+    .ann-badge.red    { background: #ef4444; }
+    .ann-badge.blue   { background: #2563eb; }
+    .ann-badge.green  { background: #16a34a; }
+    .ann-badge.amber  { background: #d97706; }
+    .ann-badge.violet { background: #7c3aed; }
+    /* Arrow indicator for sequential list */
+    .ann-arrow {
+      position: absolute;
+      pointer-events: none;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900;
+    }
+    /* Legend below screenshot */
+    .ann-legend {
+      margin-top: 10px;
+      width: 100%;
+    }
+    .ann-legend-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      margin-bottom: 5px;
+      font-size: 8pt;
+      color: #334155;
+    }
+    .ann-dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 7.5px; font-weight: 800; color: #fff; margin-top: 1px;
+    }
+    .ann-dot.red    { background: #ef4444; }
+    .ann-dot.blue   { background: #2563eb; }
+    .ann-dot.green  { background: #16a34a; }
+    .ann-dot.amber  { background: #d97706; }
+    .ann-dot.violet { background: #7c3aed; }
+
+    /* ─── Ocultar anotaciones para exportar ─── */
+    .ann-box, .ann-badge, .ann-arrow { display: none !important; }
+
+    /* ─── Print toolbar (screen only) ─── */
+    .print-bar {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+    }
+    .print-btn {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 22px;
+      font-size: 10pt;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(37,99,235,0.35);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .print-btn:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     PORTADA
+═══════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-logo">🚌</div>
+  <div class="cover-tag">Documentación Oficial</div>
+  <h1>App Recolectora<br>NextBus</h1>
+  <h2>Manual de Usuario</h2>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <strong>Versión</strong> 1.0<br>
+    <strong>Plataforma</strong> Android · iOS<br>
+    <strong>Audiencia</strong> Recolectores de Datos · Observadores de Campo<br>
+    <strong>Fecha</strong> 2025
+  </div>
+  <div class="cover-footer">NextBus Logistics · Uso interno · Confidencial</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CONTENIDO PRINCIPAL
+═══════════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- ─── ÍNDICE ─── -->
+  <div class="toc-section page-break">
+    <div class="section-tag">Índice</div>
+    <div class="toc-title">Tabla de Contenidos</div>
+    <div class="toc-subtitle">Guía completa de todas las funcionalidades de la aplicación</div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Introducción</div>
+      <a class="toc-item" href="#intro">
+        <span class="toc-num">01</span> Presentación y objetivo de la aplicación
+        <span class="toc-dots"></span><span class="toc-page">3</span>
+      </a>
+      <a class="toc-item" href="#acceso">
+        <span class="toc-num">02</span> Acceso y gestión de cuenta
+        <span class="toc-dots"></span><span class="toc-page">4</span>
+      </a>
+      <a class="toc-item" href="#navegacion">
+        <span class="toc-num">03</span> Navegación principal (menú lateral)
+        <span class="toc-dots"></span><span class="toc-page">5</span>
+      </a>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Módulo 1 — Recolección en Parada</div>
+      <a class="toc-item" href="#apertura">
+        <span class="toc-num">04</span> Apertura de Turno
+        <span class="toc-dots"></span><span class="toc-page">6</span>
+      </a>
+      <a class="toc-item" href="#dashboard">
+        <span class="toc-num">05</span> Panel de Recolección Activa
+        <span class="toc-dots"></span><span class="toc-page">7</span>
+      </a>
+      <a class="toc-item" href="#evento-bus">
+        <span class="toc-num">06</span> Registro de Evento de Bus
+        <span class="toc-dots"></span><span class="toc-page">9</span>
+      </a>
+      <a class="toc-item" href="#resumen">
+        <span class="toc-num">07</span> Resumen de Turno
+        <span class="toc-dots"></span><span class="toc-page">10</span>
+      </a>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Módulo 2 — Historial Personal</div>
+      <a class="toc-item" href="#historial">
+        <span class="toc-num">08</span> Historial de Sesiones
+        <span class="toc-dots"></span><span class="toc-page">11</span>
+      </a>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Módulo 3 — Historial Global</div>
+      <a class="toc-item" href="#global">
+        <span class="toc-num">09</span> Cobertura Histórica (Mapa de calor)
+        <span class="toc-dots"></span><span class="toc-page">12</span>
+      </a>
+      <a class="toc-item" href="#desglose">
+        <span class="toc-num">10</span> Desglose por Parada
+        <span class="toc-dots"></span><span class="toc-page">13</span>
+      </a>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Módulo 4 — Estudio a Bordo</div>
+      <a class="toc-item" href="#ride-inicio">
+        <span class="toc-num">11</span> Inicio de Recorrido
+        <span class="toc-dots"></span><span class="toc-page">14</span>
+      </a>
+      <a class="toc-item" href="#ride-dashboard">
+        <span class="toc-num">12</span> Registro de Paradas durante el Recorrido
+        <span class="toc-dots"></span><span class="toc-page">15</span>
+      </a>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Módulo 5 — Telemetría</div>
+      <a class="toc-item" href="#telemetria">
+        <span class="toc-num">13</span> Telemetría de Ruta (Conectividad GPS)
+        <span class="toc-dots"></span><span class="toc-page">17</span>
+      </a>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Referencia rápida</div>
+      <a class="toc-item" href="#sincronizacion">
+        <span class="toc-num">14</span> Sincronización de datos (modo offline)
+        <span class="toc-dots"></span><span class="toc-page">18</span>
+      </a>
+
+        <span class="toc-dots"></span><span class="toc-page">19</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ─── SECCIÓN 1: INTRODUCCIÓN ─── -->
+  <div id="intro" class="module page-break">
+    <div class="section-header">
+      <div class="section-tag">Capítulo 1 · Introducción</div>
+      <div class="section-title">¿Qué es la App Recolectora?</div>
+      <div class="section-desc">Una herramienta de campo diseñada para capturar datos de demanda, flujo de buses y conectividad en rutas de transporte urbano.</div>
+    </div>
+
+    <p>La <strong>App Recolectora NextBus</strong> es una aplicación móvil multiplataforma (Android e iOS) que permite a los observadores de campo registrar información de transporte público de manera estructurada y confiable, incluso sin conexión a internet.</p>
+
+    <p>Los datos recopilados alimentan un sistema centralizado en la nube que permite al equipo analítico evaluar la demanda, el comportamiento de las rutas y la cobertura de observación.</p>
+
+    <h3>Funcionalidades principales</h3>
+    <ul class="nav-list">
+      <li class="nav-item"><span class="nav-dot"></span><strong>Recolección en Parada</strong> — Registrar intervalos de demanda y eventos de buses en una parada específica.</li>
+      <li class="nav-item"><span class="nav-dot green"></span><strong>Estudio a Bordo</strong> — Registrar el flujo de pasajeros (suben/bajan) en cada parada durante un recorrido.</li>
+      <li class="nav-item"><span class="nav-dot amber"></span><strong>Historial Personal</strong> — Ver y retomar sesiones previas, sincronizar datos pendientes.</li>
+      <li class="nav-item"><span class="nav-dot violet"></span><strong>Cobertura Histórica Global</strong> — Visualizar un mapa de calor de todas las observaciones del equipo.</li>
+      <li class="nav-item"><span class="nav-dot slate"></span><strong>Telemetría de Conectividad</strong> — Medir la cobertura de datos móviles a lo largo de las rutas.</li>
+    </ul>
+
+    <div class="info-box blue">
+      <span class="info-icon">💡</span>
+      <div class="info-content">
+        <div class="info-title">Diseño offline-first</div>
+        <p>Todos los datos se guardan primero en el dispositivo. La sincronización con la nube puede hacerse en cualquier momento, incluso días después, cuando exista conexión a internet.</p>
+      </div>
+    </div>
+
+    <h3>Requisitos técnicos</h3>
+    <table class="fields-table">
+      <thead>
+        <tr><th>Requisito</th><th>Mínimo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sistema operativo Android</td><td>Android 8.0 (Oreo) o superior</td></tr>
+        <tr><td>Sistema operativo iOS</td><td>iOS 13 o superior</td></tr>
+        <tr><td>Almacenamiento libre</td><td>100 MB</td></tr>
+        <tr><td>Conexión para sincronizar</td><td>Wi-Fi o datos móviles (3G/4G/5G)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── ACCESO ─── -->
+  <div id="acceso" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-blue">🔐</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 02</div>
+        <div class="module-title">Acceso y Gestión de Cuenta</div>
+        <div class="module-subtitle">Cómo iniciar sesión y registrarse en la aplicación</div>
+      </div>
+    </div>
+
+    <h3>Iniciar Sesión</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Pantalla de acceso</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/login.jpeg" alt="Pantalla de inicio de sesión" />
+            <!-- Campo correo -->
+            <div class="ann-box blue" style="top:51%;left:4%;width:90%;height:8%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Campo contraseña -->
+            <div class="ann-box blue" style="top:62%;left:4%;width:90%;height:8%;">
+              <span class="ann-badge blue">2</span>
+            </div>
+            <!-- Olvidaste contraseña -->
+            <div class="ann-box violet" style="top:60%;left:55%;width:40%;height:5%;">
+              <span class="ann-badge violet">3</span>
+            </div>
+            <!-- Botón ingresar -->
+            <div class="ann-box green" style="top:72%;left:4%;width:90%;height:7%;">
+              <span class="ann-badge green">4</span>
+            </div>
+            <!-- Crear cuenta -->
+            <div class="ann-box amber" style="top:81%;left:4%;width:90%;height:7%;">
+              <span class="ann-badge amber">5</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Correo electrónico</strong>: dirección institucional del observador.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Contraseña</strong>: clave secreta de la cuenta.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot violet">3</span><span><strong>¿Olvidaste tu contraseña?</strong>: envía un enlace de recuperación al correo.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">4</span><span><strong>Ingresar</strong>: verifica credenciales y abre la app.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">5</span><span><strong>Crear una cuenta nueva</strong>: navega al formulario de registro.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Al abrir la app por primera vez, o al cerrar sesión, se muestra automáticamente la pantalla de inicio de sesión de <strong>NextBus Logistics</strong>.</p>
+        <table class="fields-table" style="margin-bottom:12px;">
+          <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Correo electrónico</strong></td><td>Dirección de correo institucional registrada en el sistema.</td></tr>
+            <tr><td><strong>Contraseña</strong></td><td>Clave personal asignada durante el registro (mínimo 6 caracteres).</td></tr>
+          </tbody>
+        </table>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content">
+              <div class="step-label">Ingresar correo y contraseña</div>
+              <div class="step-desc">Use las credenciales proporcionadas por el administrador del sistema.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-content">
+              <div class="step-label">Presionar "Ingresar"</div>
+              <div class="step-desc">La app verificará las credenciales y redirigirá al formulario principal. Si son incorrectas, se mostrará un mensaje de error.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Registrar una nueva cuenta</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Formulario de registro</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/registro.jpeg" alt="Pantalla Crear Cuenta" />
+            <!-- Campo nombre -->
+            <div class="ann-box blue" style="top:30%;left:4%;width:90%;height:8%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Campo correo -->
+            <div class="ann-box blue" style="top:42%;left:4%;width:90%;height:8%;">
+              <span class="ann-badge blue">2</span>
+            </div>
+            <!-- Campo contraseña -->
+            <div class="ann-box blue" style="top:54%;left:4%;width:90%;height:8%;">
+              <span class="ann-badge blue">3</span>
+            </div>
+            <!-- Confirmar contraseña -->
+            <div class="ann-box blue" style="top:65%;left:4%;width:90%;height:8%;">
+              <span class="ann-badge blue">4</span>
+            </div>
+            <!-- Botón crear -->
+            <div class="ann-box green" style="top:76%;left:4%;width:90%;height:7%;">
+              <span class="ann-badge green">5</span>
+            </div>
+            <!-- Volver -->
+            <div class="ann-box amber" style="top:85%;left:4%;width:90%;height:7%;">
+              <span class="ann-badge amber">6</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Nombre completo</strong>: aparecerá en el encabezado del menú y en los registros exportados.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Correo electrónico</strong>: se usará como identificador de usuario.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">3</span><span><strong>Contraseña</strong>: mínimo 6 caracteres.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">4</span><span><strong>Confirmar contraseña</strong>: debe coincidir exactamente con el campo anterior.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">5</span><span><strong>Crear cuenta</strong>: crea la cuenta y abre la app directamente.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">6</span><span><strong>Volver a iniciar sesión</strong>: regresa a la pantalla de login.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Desde la pantalla de login, toque <strong>"Crear una cuenta nueva"</strong> para abrir el formulario de registro. Todos los campos son obligatorios.</p>
+        <table class="fields-table" style="margin-bottom:12px;">
+          <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nombre completo</strong></td><td>Nombre que identificará al observador en todos los registros del sistema.</td></tr>
+            <tr><td><strong>Correo electrónico</strong></td><td>Dirección única de correo, usada como nombre de usuario.</td></tr>
+            <tr><td><strong>Contraseña</strong></td><td>Mínimo 6 caracteres. Se recomienda usar letras y números.</td></tr>
+            <tr><td><strong>Confirmar contraseña</strong></td><td>Repetir la contraseña para evitar errores tipográficos.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <p>✅ Al presionar <strong>"Crear cuenta"</strong>, el sistema registra la cuenta y la sesión se inicia automáticamente, sin necesidad de volver a hacer login.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Cerrar sesión</h3>
+    <p>La opción <strong>"Cerrar sesión"</strong> se encuentra al final del menú lateral (drawer). Al presionarla, la app cerrará la sesión y regresará a la pantalla de login.</p>
+
+    <div class="info-box amber">
+      <span class="info-icon">⚠️</span>
+      <div class="info-content">
+        <div class="info-title">Antes de cerrar sesión</div>
+        <p>Asegúrese de haber sincronizado todos los datos pendientes. Los datos no sincronizados quedan guardados en el dispositivo pero estarán vinculados a su cuenta; otro usuario en el mismo teléfono no podrá subirlos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── NAVEGACIÓN ─── -->
+  <div id="navegacion" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-slate">🗂️</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 03</div>
+        <div class="module-title">Navegación Principal</div>
+        <div class="module-subtitle">El menú lateral (drawer) y cómo moverse entre módulos</div>
+      </div>
+    </div>
+
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Menú lateral</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/sidebar.png" alt="Menú lateral de la aplicación" />
+            <!-- Encabezado con nombre de usuario -->
+            <div class="ann-box blue" style="top:2%;left:3%;width:70%;height:18%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Ítem activo: Formulario -->
+            <div class="ann-box green" style="top:34%;left:3%;width:90%;height:9%;">
+              <span class="ann-badge green">2</span>
+            </div>
+            <!-- Lista de secciones -->
+            <div class="ann-box amber" style="top:43%;left:3%;width:90%;height:45%;">
+              <span class="ann-badge amber">3</span>
+            </div>
+            <!-- Cerrar sesión -->
+            <div class="ann-box red" style="top:89%;left:3%;width:60%;height:9%;">
+              <span class="ann-badge red">4</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Encabezado</strong>: logo, nombre de la app y saludo personalizado con el nombre del observador activo.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Sección activa</strong>: la pantalla actual se resalta en azul con fondo tenue.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">3</span><span><strong>Módulos disponibles</strong>: Mis registros, Historial global, Estudio a Bordo y Telemetría de conectividad.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot red">4</span><span><strong>Cerrar sesión</strong>: en rojo en la parte inferior del menú.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Para abrir el menú lateral, deslice desde el borde izquierdo de la pantalla hacia la derecha, o toque el ícono de menú (☰) en la esquina superior izquierda del encabezado.</p>
+
+        <h3>Secciones del menú</h3>
+        <table class="fields-table">
+          <thead>
+            <tr><th>Ícono</th><th>Nombre en el menú</th><th>Función</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>✏️</td><td><strong>Formulario</strong></td><td>Crear y gestionar sesiones de recolección en parada</td></tr>
+            <tr><td>🕐</td><td><strong>Mis registros</strong></td><td>Historial personal de sesiones y sincronización</td></tr>
+            <tr><td>📊</td><td><strong>Historial global</strong></td><td>Mapa de calor de cobertura de todo el equipo</td></tr>
+            <tr><td>🚌</td><td><strong>Estudio a Bordo</strong></td><td>Registro de pasajeros durante un recorrido en bus</td></tr>
+            <tr><td>📡</td><td><strong>Telemetría de conectividad</strong></td><td>Captura de puntos GPS y calidad de señal</td></tr>
+            <tr><td>🚪</td><td><strong>Cerrar sesión</strong></td><td>Terminar la sesión del usuario actual</td></tr>
+          </tbody>
+        </table>
+        <p>El menú muestra en el encabezado el nombre del observador activo. La sección seleccionada se resalta en azul para indicar la pantalla actual.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MÓDULO 1: RECOLECCIÓN EN PARADA
+  ════════════════════════════════════════ -->
+  <div class="section-header page-break">
+    <div class="section-tag">Módulo 1</div>
+    <div class="section-title">Recolección en Parada</div>
+    <div class="section-desc">Flujo completo para registrar demanda y movimiento de buses en un punto de parada durante un turno de trabajo.</div>
+  </div>
+
+  <!-- 4. Apertura de Turno -->
+  <div id="apertura" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-blue">📋</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 04</div>
+        <div class="module-title">Apertura de Turno</div>
+        <div class="module-subtitle">Configurar los datos iniciales de una jornada de observación</div>
+      </div>
+    </div>
+
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Pantalla principal</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso1.jpeg" alt="Pantalla Apertura de Turno" />
+          </div>
+          <div class="screenshot-caption">Formulario de Apertura de Turno</div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Esta es la pantalla de inicio del módulo <strong>Formulario</strong>. Antes de comenzar a registrar datos, el observador debe completar cuatro campos obligatorios que identifican la sesión.</p>
+
+        <p>En la parte superior se muestra automáticamente el nombre del <strong>observador</strong> (usuario autenticado) y la <strong>fecha actual</strong> del dispositivo, sin necesidad de ingresarlos manualmente.</p>
+
+        <div class="callout">
+          <p>💡 Si existía una sesión en progreso de una jornada anterior, la app la mostrará como "sesión pendiente" y permitirá <strong>retomar</strong> o iniciar una nueva apertura.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Campos del formulario</h3>
+    <table class="fields-table">
+      <thead>
+        <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Parada Observada</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Selector desplegable</td>
+          <td>Parada física donde se realizará la observación. Las opciones se organizan en <strong>Puntos de Entrada</strong> (sentido de ida) y <strong>Puntos de Salida</strong> (sentido de vuelta). Ver imágenes debajo.</td>
+        </tr>
+        <tr>
+          <td><strong>Turno de Recolección</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Selector de opciones</td>
+          <td>
+            Franja horaria asignada al turno de trabajo:<br>
+            <div class="chip-group">
+              <span class="chip active">08h00–11h00</span>
+              <span class="chip">11h00–14h00</span>
+              <span class="chip">14h00–16h30</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Día de la Semana</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Selector de opciones</td>
+          <td>
+            Día en que se realiza la observación (solo días laborables):
+            <div class="chip-group">
+              <span class="chip active">Lunes</span><span class="chip">Martes</span><span class="chip">Miércoles</span><span class="chip">Jueves</span><span class="chip">Viernes</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Tipo de Día</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Selector de opciones</td>
+          <td>
+            Categoría que describe la naturaleza del día observado:
+            <div class="chip-group">
+              <span class="chip active">Laborable</span><span class="chip">Evento especial</span><span class="chip">Exámenes</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Observador / Fecha</strong> <span class="optional-badge">Auto</span></td>
+          <td>Solo lectura</td>
+          <td>Se rellena automáticamente. No requiere acción del usuario.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Selección de parada: Puntos de Entrada y Salida</h3>
+    <p>Al tocar el selector <strong>"Parada Observada"</strong> se despliega un panel con todas las paradas disponibles, organizadas en dos grupos según el sentido del recorrido:</p>
+
+    <div class="screenshot-row">
+      <div class="screenshot-col">
+        <span class="screenshot-label">Puntos de Entrada</span>
+        <div class="screenshot-frame size-md">
+          <img src="imgs/paso1_puntos_entrada.jpeg" alt="Lista de Puntos de Entrada" />
+        </div>
+        <div class="screenshot-caption">Paradas en sentido de <strong>Ida</strong> (INBOUND):<br>
+          Garita Entrada, Facultad Ciencias de la Vida, Biblioteca, Facultad Ciencias Sociales y Humanísticas, FIEC, Estación de buses, FADCOM, entre otras.</div>
+      </div>
+      <div class="screenshot-col">
+        <span class="screenshot-label">Puntos de Salida</span>
+        <div class="screenshot-frame size-md">
+          <img src="imgs/paso1_puntos_salida.jpeg" alt="Lista de Puntos de Salida" />
+        </div>
+        <div class="screenshot-caption">Paradas en sentido de <strong>Vuelta</strong> (OUTBOUND):<br>
+          FADCOM, Estación de buses, Gimnasio Bienestar, Centro de Lenguas, Centro de Promoción y Empleo, Piscina, Garita Salida, CTI, entre otras.</div>
+      </div>
+    </div>
+
+    <h3>Cómo iniciar una sesión</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Seleccionar la parada observada</div>
+          <div class="step-desc">Tocar el selector y elegir la parada correspondiente a la zona asignada. Puede ser un Punto de Entrada o de Salida.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Elegir el turno de recolección</div>
+          <div class="step-desc">Tocar el chip con la franja horaria del turno asignado (08h00–11h00, 11h00–14h00 o 14h00–16h30). El chip seleccionado se resalta en azul.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Seleccionar el día de la semana y el tipo de día</div>
+          <div class="step-desc">Tocar el día correspondiente (Lunes a Viernes) y la categoría del día (Laborable, Evento especial o Exámenes).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Presionar "Iniciar Recolección"</div>
+          <div class="step-desc">La app creará la sesión y navegará automáticamente al Panel de Recolección Activa para comenzar a registrar intervalos.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box amber">
+      <span class="info-icon">💾</span>
+      <div class="info-content">
+        <div class="info-title">Guardado automático de borrador</div>
+        <p>La app guarda automáticamente los campos mientras los completa. Si cierra accidentalmente la pantalla o la aplicación, al regresar encontrará los datos tal como los dejó, sin necesidad de volver a ingresar la información.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Dashboard Recolección Activa -->
+  <div id="dashboard" class="module page-break">
+    <div class="module-header">
+      <div class="module-icon icon-blue">📊</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 05</div>
+        <div class="module-title">Panel de Recolección Activa</div>
+        <div class="module-subtitle">Registrar intervalos de demanda y llegadas de buses en tiempo real</div>
+      </div>
+    </div>
+
+    <p>Una vez iniciado el turno, esta es la pantalla principal de trabajo. Desde aquí el observador gestiona los <strong>intervalos de demanda</strong> (conteo de personas que llegan y se retiran) y los <strong>eventos de llegada de bus</strong>.</p>
+
+    <!-- ── PASO A: Vista inicial del dashboard ── -->
+    <h3>A. Vista general del panel</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Panel principal</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso2.jpeg" alt="Panel de Recolección Activa" />
+            <!-- ① Iniciar Conteo -->
+            <div class="ann-box blue" style="top:37%;left:4%;width:47%;height:13%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- ② Llegó Bus -->
+            <div class="ann-box green" style="top:37%;left:53%;width:43%;height:13%;">
+              <span class="ann-badge green">2</span>
+            </div>
+            <!-- ③ Cerrar Turno -->
+            <div class="ann-box red" style="top:23%;left:54%;width:41%;height:9%;">
+              <span class="ann-badge red">3</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Iniciar Conteo</strong> — abre el selector de intervalo de 10 min.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Llegó Bus</strong> — registra la llegada de un bus a la parada.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot red">3</span><span><strong>Cerrar Turno</strong> — finaliza la jornada de recolección.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Al ingresar al panel, la pantalla muestra tres elementos clave:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:#2563eb"></div>
+            <div class="step-content">
+              <div class="step-label">Iniciar Conteo <span style="color:#2563eb">[①]</span></div>
+              <div class="step-desc">Permite seleccionar el intervalo de 10 minutos que se va a registrar. Mientras no se seleccione un intervalo, los contadores permanecen inactivos.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#16a34a"></div>
+            <div class="step-content">
+              <div class="step-label">Llegó Bus <span style="color:#16a34a">[②]</span></div>
+              <div class="step-desc">Checkbox que, al activarse, registra la hora de llegada del bus y abre el formulario de evento de bus. Requiere tener un intervalo activo.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#ef4444"></div>
+            <div class="step-content">
+              <div class="step-label">Cerrar Turno <span style="color:#ef4444">[③]</span></div>
+              <div class="step-desc">Finaliza completamente la jornada. Se solicita confirmación antes de proceder. Una vez cerrado no se pueden agregar más registros.</div>
+            </div>
+          </div>
+        </div>
+        <p>La sección <strong>"Actividad Reciente"</strong> en la parte inferior lista todos los intervalos y eventos registrados durante el turno actual.</p>
+      </div>
+    </div>
+
+    <!-- ── PASO B: Selección de intervalo ── -->
+    <h3>B. Selección del intervalo de 10 minutos</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Selector de Intervalo</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso2_seleccionar_intervalo.jpeg" alt="Selector de intervalo" />
+            <!-- Primer intervalo -->
+            <div class="ann-box blue" style="top:28%;left:4%;width:88%;height:8%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Flecha indicando orden ascendente -->
+            <div class="ann-arrow" style="position:absolute;top:38%;right:3%;color:#d97706;font-size:18px;">↓</div>
+            <!-- Último intervalo visible -->
+            <div class="ann-box amber" style="top:79%;left:4%;width:88%;height:7%;">
+              <span class="ann-badge amber">N</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span>Primer intervalo del turno (ej. 08h00–08h10).</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">N</span><span>Los intervalos avanzan en orden ascendente de 10 en 10 minutos.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Al tocar <strong>"Iniciar Conteo"</strong>, se despliega un panel con todos los intervalos de 10 minutos disponibles para el turno seleccionado.</p>
+        <div class="info-box blue">
+          <span class="info-icon">🕐</span>
+          <div class="info-content">
+            <div class="info-title">Orden obligatorio: de menor a mayor</div>
+            <p>Los intervalos deben registrarse en orden ascendente: primero <strong>08h00–08h10</strong>, luego <strong>08h10–08h20</strong>, y así sucesivamente hasta completar el turno. Los intervalos ya registrados aparecen desactivados y no pueden seleccionarse de nuevo.</p>
+          </div>
+        </div>
+        <p>El sistema muestra automáticamente resaltado el intervalo que corresponde a la hora actual del dispositivo, como referencia para el observador.</p>
+      </div>
+    </div>
+
+    <!-- ── PASO C: Contadores de demanda ── -->
+    <h3>C. Registro de demanda y abandono</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Contadores activos</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso2_registrar_demanda_abandono.jpeg" alt="Contadores de demanda" />
+            <!-- SE RETIRAN -->
+            <div class="ann-box red" style="top:43%;left:3%;width:44%;height:20%;">
+              <span class="ann-badge red">1</span>
+            </div>
+            <!-- LLEGAN -->
+            <div class="ann-box blue" style="top:43%;left:49%;width:44%;height:20%;">
+              <span class="ann-badge blue">2</span>
+            </div>
+            <!-- Finalizar Intervalo -->
+            <div class="ann-box amber" style="top:64%;left:3%;width:91%;height:9%;">
+              <span class="ann-badge amber">3</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot red">1</span><span><strong>Se Retiran</strong> — personas que abandonan la parada sin tomar bus.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Llegan</strong> — personas que llegan a la parada a esperar el bus.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">3</span><span><strong>Finalizar Intervalo</strong> — cierra el conteo y abre el panel de confirmación.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Una vez seleccionado el intervalo, aparecen los contadores. El encabezado muestra el rango activo (ej. <strong>Contando: 08h00 – 08h10</strong>).</p>
+        <table class="fields-table" style="margin-top:10px;">
+          <thead><tr><th>Contador</th><th>Color</th><th>Qué registra</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Se Retiran</strong></td>
+              <td><span style="color:#ef4444;font-weight:700;">■</span> Rojo</td>
+              <td>Personas que llegan a la parada pero se van <em>sin</em> abordar ningún bus durante el intervalo.</td>
+            </tr>
+            <tr>
+              <td><strong>Llegan</strong></td>
+              <td><span style="color:#2563eb;font-weight:700;">■</span> Azul</td>
+              <td>Personas que llegan a la parada a esperar el bus durante el intervalo.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Cada contador tiene botones <strong>+</strong> (incrementar) y <strong>−</strong> (decrementar) para ir ajustando el conteo en tiempo real mientras se observa la parada.</p>
+        <p>Al terminar el intervalo, se presiona <strong>"Finalizar Intervalo"</strong> para abrir el panel de cierre.</p>
+      </div>
+    </div>
+
+    <!-- ── PASO D: Cierre de intervalo ── -->
+    <h3>D. Cierre y confirmación del intervalo</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Panel de Cierre</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso2_cerrar_intervalo.jpeg" alt="Cierre de intervalo" />
+            <!-- Llegan field -->
+            <div class="ann-box blue" style="top:37%;left:4%;width:42%;height:9%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Se retiran field -->
+            <div class="ann-box red" style="top:37%;left:50%;width:43%;height:9%;">
+              <span class="ann-badge red">2</span>
+            </div>
+            <!-- En espera al cierre -->
+            <div class="ann-box violet" style="top:50%;left:4%;width:89%;height:9%;">
+              <span class="ann-badge violet">3</span>
+            </div>
+            <!-- Guardar button -->
+            <div class="ann-box green" style="top:72%;left:4%;width:89%;height:9%;">
+              <span class="ann-badge green">4</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Llegan</strong> — confirmación del total de llegadas.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot red">2</span><span><strong>Se Retiran</strong> — confirmación del total de abandonos.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot violet">3</span><span><strong>En espera al cierre</strong> — personas que quedaron esperando al cerrar el intervalo.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">4</span><span><strong>Guardar Registro Definitivo</strong> — guarda el intervalo de forma permanente.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>El panel <strong>"Cierre de Intervalo"</strong> permite corroborar y ajustar los datos antes de guardarlos de forma definitiva.</p>
+        <table class="fields-table" style="margin-top:10px;">
+          <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Llegan</strong> <span class="required-badge">Req.</span></td><td>Se pre-rellena con el valor del contador. Puede corregirse manualmente.</td></tr>
+            <tr><td><strong>Se Retiran</strong> <span class="required-badge">Req.</span></td><td>Se pre-rellena con el valor del contador. Puede corregirse manualmente.</td></tr>
+            <tr><td><strong>En espera al cierre</strong></td><td>Personas que <em>permanecieron</em> en la parada al finalizar el intervalo, sin haber abordado un bus. Se calcula y confirma aquí. Por defecto: 0.</td></tr>
+            <tr><td><strong>Observaciones</strong> <span class="optional-badge">Opcional</span></td><td>Texto libre para novedades del intervalo.</td></tr>
+          </tbody>
+        </table>
+        <div class="info-box blue">
+          <span class="info-icon">💡</span>
+          <div class="info-content">
+            <div class="info-title">¿Cómo calcular "En espera al cierre"?</div>
+            <p>Es la diferencia entre las personas que llegaron y las que abordaron un bus o se retiraron durante el intervalo. Representa la <strong>cola acumulada</strong> que quedó en la parada.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice red">
+      ⚠️ <strong>No es posible registrar la llegada de un bus sin un intervalo activo.</strong> Siempre seleccione primero el rango de tiempo antes de marcar "Llegó Bus".
+    </div>
+  </div>
+
+  <!-- 6. Evento de Bus -->
+  <div id="evento-bus" class="module page-break">
+    <div class="module-header">
+      <div class="module-icon icon-green">🚌</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 06</div>
+        <div class="module-title">Registro de Evento de Bus</div>
+        <div class="module-subtitle">Flujo completo para reportar la llegada de un bus y capturar el flujo de pasajeros</div>
+      </div>
+    </div>
+
+    <p>El registro de un bus es un sub-flujo que se activa desde el panel de recolección activa cuando el observador detecta la llegada de un bus a la parada. Consta de cuatro momentos encadenados.</p>
+
+    <!-- ── E: Preámbulo ── -->
+    <h3>E. Preámbulo: intervalo activo con conteo en curso</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Estado previo al bus</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso2_registrar_bus_preambulo.jpeg" alt="Preámbulo registro bus" />
+            <!-- Llegó bus checkbox -->
+            <div class="ann-box green" style="top:37%;left:52%;width:43%;height:14%;">
+              <span class="ann-badge green">1</span>
+            </div>
+            <!-- Contadores activos -->
+            <div class="ann-box blue" style="top:39%;left:3%;width:48%;height:14%;">
+              <span class="ann-badge blue">2</span>
+            </div>
+            <!-- Actividad reciente con registro previo -->
+            <div class="ann-box amber" style="top:72%;left:3%;width:92%;height:12%;">
+              <span class="ann-badge amber">3</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot green">1</span><span><strong>Llegó Bus</strong> — disponible mientras haya intervalo activo.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Conteo en curso</strong> — 2 se retiran, 5 llegan en el intervalo 08h10–08h20.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">3</span><span><strong>Actividad reciente</strong> — intervalo 08h00–08h10 ya guardado.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Antes de que llegue el bus, el observador está contando activamente el intervalo <strong>08h10–08h20</strong>: ha registrado 2 personas que se retiraron y 5 que llegaron a la parada.</p>
+        <p>En la sección de <strong>Actividad Reciente</strong> se puede ver el intervalo anterior (08h00–08h10) ya guardado. Cuando se detecta la llegada de un bus, el observador toca el checkbox <strong>"Llegó Bus"</strong> sin necesidad de cerrar el intervalo actual.</p>
+        <div class="notice blue" style="margin-top:12px;">
+          💡 El conteo del intervalo queda en memoria. Al volver del registro de bus, los contadores conservan sus valores.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── F: Confirmación modal ── -->
+    <h3>F. Confirmación de llegada del bus</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Modal de confirmación</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso3_registrar_bus.jpeg" alt="Modal confirmación bus" />
+            <!-- Botón Cancelar -->
+            <div class="ann-box red" style="top:61%;left:5%;width:37%;height:8%;">
+              <span class="ann-badge red">1</span>
+            </div>
+            <!-- Botón Sí llegó -->
+            <div class="ann-box green" style="top:61%;left:46%;width:48%;height:8%;">
+              <span class="ann-badge green">2</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot red">1</span><span><strong>Cancelar</strong> — regresa al panel sin registrar el bus.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Sí, llegó</strong> — confirma y registra la hora exacta de llegada.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Al tocar el checkbox "Llegó Bus", la app muestra un diálogo de confirmación: <strong>"¿Un bus acaba de llegar?"</strong></p>
+        <p>Este paso es importante porque en el momento en que el usuario presiona <strong>"Sí, llegó"</strong>, la app registra automáticamente la <strong>hora exacta de llegada</strong> del bus. Esta hora no puede modificarse después.</p>
+        <table class="fields-table" style="margin-top:12px;">
+          <thead><tr><th>Opción</th><th>Acción</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Cancelar</strong></td><td>Cierra el modal. Vuelve al panel sin registrar nada. El conteo del intervalo continúa intacto.</td></tr>
+            <tr><td><strong>Sí, llegó</strong></td><td>Captura la hora actual como hora de llegada y navega al formulario de Detalles del Bus.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── G: Formulario detalles bus ── -->
+    <h3>G. Formulario: Detalles del Bus</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Detalles del Bus</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso3_llenar_datos_bus.jpeg" alt="Formulario detalles bus" />
+            <!-- Matrícula -->
+            <div class="ann-box blue" style="top:22%;left:3%;width:92%;height:18%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Suben -->
+            <div class="ann-box green" style="top:47%;left:3%;width:44%;height:12%;">
+              <span class="ann-badge green">2</span>
+            </div>
+            <!-- Bajan -->
+            <div class="ann-box red" style="top:47%;left:51%;width:44%;height:12%;">
+              <span class="ann-badge red">3</span>
+            </div>
+            <!-- Observaciones -->
+            <div class="ann-box amber" style="top:63%;left:3%;width:92%;height:15%;">
+              <span class="ann-badge amber">4</span>
+            </div>
+            <!-- Guardar -->
+            <div class="ann-box violet" style="top:90%;left:3%;width:92%;height:8%;">
+              <span class="ann-badge violet">5</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Matrícula / Disco</strong> — identificador del bus (ej. GEA-5096).</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Suben</strong> — pasajeros que abordan el bus.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot red">3</span><span><strong>Bajan</strong> — pasajeros que descienden del bus.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">4</span><span><strong>Observaciones</strong> — novedades o incidentes (opcional).</span></div>
+            <div class="ann-legend-item"><span class="ann-dot violet">5</span><span><strong>Guardar Evento de Bus</strong> — registra y vuelve al panel.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>La pantalla <strong>"Detalles del Bus"</strong> muestra en el encabezado verde la hora de llegada registrada automáticamente. El observador completa los siguientes campos:</p>
+        <table class="fields-table" style="margin-top:8px;">
+          <thead><tr><th>Campo</th><th>Obligatorio</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Matrícula / Disco</strong></td><td><span class="required-badge">Sí</span></td><td>Seleccionar de la lista de buses registrados en el sistema.</td></tr>
+            <tr><td><strong>Suben</strong></td><td><span class="required-badge">Sí</span></td><td>Número de pasajeros que abordaron. Campo con fondo verde.</td></tr>
+            <tr><td><strong>Bajan</strong></td><td><span class="required-badge">Sí</span></td><td>Número de pasajeros que descendieron. Campo con fondo rojo.</td></tr>
+            <tr><td><strong>Observaciones</strong></td><td><span class="optional-badge">No</span></td><td>Texto libre: novedades, fallas, incidentes con la unidad.</td></tr>
+            <tr><td><strong>Hora llegada</strong></td><td><span class="optional-badge">Auto</span></td><td>Capturada al confirmar en el modal anterior.</td></tr>
+            <tr><td><strong>Hora salida</strong></td><td><span class="optional-badge">Auto</span></td><td>Capturada en el momento de presionar "Guardar".</td></tr>
+          </tbody>
+        </table>
+        <div class="info-box green">
+          <span class="info-icon">⏱️</span>
+          <div class="info-content">
+            <div class="info-title">Tiempo de permanencia automático</div>
+            <p>La app calcula sola el tiempo que el bus estuvo en la parada: desde "Sí, llegó" hasta "Guardar Evento de Bus". No requiere cronómetro manual.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── H: Actividad reciente con bus e intervalos ── -->
+    <h3>H. Resultado: Actividad Reciente actualizada</h3>
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Panel actualizado</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso4_ver_registro_bus_e_intervalos.jpeg" alt="Actividad reciente con bus e intervalos" />
+            <!-- Intervalo 08h00-08h10 -->
+            <div class="ann-box blue" style="top:46%;left:3%;width:92%;height:10%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Intervalo 08h10-08h20 -->
+            <div class="ann-box blue" style="top:57%;left:3%;width:92%;height:10%;">
+              <span class="ann-badge blue">2</span>
+            </div>
+            <!-- Registro de Bus -->
+            <div class="ann-box green" style="top:68%;left:3%;width:92%;height:10%;">
+              <span class="ann-badge green">3</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Intervalo 08h00–08h10</strong>: Llegan 10 | Se Retiran 5 | Esperan 5 al cierre.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Intervalo 08h10–08h20</strong>: Llegan 5 | Se Retiran 2 | Esperan 0 al cierre (bus absorbió la cola).</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">3</span><span><strong>Bus GEA-5096</strong> a las 08h15 — Suben 8 | Bajan 10.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Al guardar el evento, la app regresa automáticamente al panel principal. La sección <strong>"Actividad Reciente"</strong> muestra el historial completo del turno. Los datos cuentan una historia coherente:</p>
+        <table class="fields-table" style="margin-top:8px; font-size:8.5pt;">
+          <thead><tr><th>Registro</th><th>Detalle</th><th>Lógica</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Intervalo 08h00–08h10</strong></td>
+              <td>Llegan 10 · Se Retiran 5 · Esperan 5</td>
+              <td>De 10 que llegaron, 5 se fueron sin bus. Quedan 5 en la parada.</td>
+            </tr>
+            <tr>
+              <td><strong>Intervalo 08h10–08h20</strong></td>
+              <td>Llegan 5 · Se Retiran 2 · Esperan 0</td>
+              <td>5 heredados + 5 nuevos = 10. Se retiran 2, quedan 8. El bus llega a las 08h15 y suben exactamente 8 → 0 en espera.</td>
+            </tr>
+            <tr>
+              <td><strong>Bus GEA-5096 · 08h15</strong></td>
+              <td>Suben 8 · Bajan 10</td>
+              <td>Absorbe la cola completa. Los 8 que esperaban abordan el bus.</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="nav-list" style="margin-top:8px;">
+          <li class="nav-item"><span class="nav-dot"></span>Los <strong>Registros de Intervalo</strong> (ícono de personas) muestran rango horario, llegadas, retiros y espera al cierre.</li>
+          <li class="nav-item"><span class="nav-dot green"></span>Los <strong>Registros de Bus</strong> (ícono de camión) muestran hora de llegada, matrícula, suben y bajan.</li>
+        </ul>
+        <p>Toque cualquier registro para ver su detalle completo o editarlo.</p>
+        <div class="info-box blue">
+          <span class="info-icon">🔁</span>
+          <div class="info-content">
+            <div class="info-title">El flujo puede repetirse tantas veces como sea necesario</div>
+            <p>Dentro de un mismo intervalo pueden registrarse múltiples llegadas de bus. Cada vez que llegue un bus, toque "Llegó Bus" y repita el proceso desde el paso F.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- I. Cerrar Turno -->
+  <div id="cerrar-turno" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-red" style="background:#fef2f2;">🔴</div>
+      <div class="module-meta">
+        <div class="module-number">Paso I</div>
+        <div class="module-title">Cerrar Turno</div>
+        <div class="module-subtitle">Finalizar la jornada de recolección y bloquear nuevos registros</div>
+      </div>
+    </div>
+
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Modal de confirmación</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso5_cerrar_turno.jpeg" alt="Modal Cerrar Turno" />
+            <!-- Botón Cerrar Turno en header -->
+            <div class="ann-box red" style="top:14%;left:54%;width:42%;height:8%;">
+              <span class="ann-badge red">1</span>
+            </div>
+            <!-- Modal -->
+            <div class="ann-box blue" style="top:39%;left:4%;width:92%;height:35%;">
+              <span class="ann-badge blue">2</span>
+            </div>
+            <!-- Botón Cancelar -->
+            <div class="ann-box amber" style="top:62%;left:7%;width:38%;height:10%;">
+              <span class="ann-badge amber">3</span>
+            </div>
+            <!-- Botón Sí, cerrar -->
+            <div class="ann-box green" style="top:62%;left:51%;width:40%;height:10%;">
+              <span class="ann-badge green">4</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot red">1</span><span><strong>Botón "Cerrar Turno"</strong>: visible en la cabecera del panel principal cuando hay una recolección activa.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Modal de confirmación</strong>: advierte que no se podrán añadir más registros una vez cerrado el turno.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">3</span><span><strong>Cancelar</strong>: descarta la acción y regresa al panel sin cambios.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">4</span><span><strong>Sí, cerrar</strong>: confirma el cierre. El turno queda marcado como completado.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Al finalizar la jornada, el observador debe cerrar el turno para indicar que ya no se añadirán más datos. El botón <strong>"Cerrar Turno"</strong> se encuentra en la esquina superior derecha del panel de recolección, visible únicamente cuando existe una sesión activa.</p>
+
+        <div class="callout" style="border-color:#ef4444; background:#fff5f5;">
+          <p>⚠️ <strong>Acción irreversible:</strong> Una vez cerrado el turno, no podrá añadir ni editar registros de intervalos o buses para esa sesión. Asegúrese de haber registrado todos los datos antes de confirmar.</p>
+        </div>
+
+        <ul class="nav-list" style="margin-top:12px;">
+          <li class="nav-item"><span class="nav-dot blue"></span>Toque <strong>"Cerrar Turno"</strong> en la cabecera del panel.</li>
+          <li class="nav-item"><span class="nav-dot blue"></span>Lea el mensaje de advertencia en el modal.</li>
+          <li class="nav-item"><span class="nav-dot red"></span>Si desea continuar, toque <strong>"Sí, cerrar"</strong>. Si no, toque <strong>"Cancelar"</strong>.</li>
+          <li class="nav-item"><span class="nav-dot green"></span>El turno queda registrado como <strong>Turno Completado</strong> en el Historial de Sesiones.</li>
+        </ul>
+
+        <div class="info-box blue" style="margin-top:12px;">
+          <span class="info-icon">☁️</span>
+          <div class="info-content">
+            <div class="info-title">Recuerde sincronizar después de cerrar</div>
+            <p>El cierre solo marca la sesión como completa en el dispositivo. Diríjase a <strong>Mis Registros</strong> para subir los datos a la nube.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Resumen de Turno -->
+  <div id="resumen" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-violet">📈</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 07</div>
+        <div class="module-title">Resumen de Turno</div>
+        <div class="module-subtitle">Vista consolidada de los totales de una sesión completa</div>
+      </div>
+    </div>
+
+    <p>Se accede desde el <strong>Historial de Sesiones</strong> → botón "Ver Detalles". Muestra un resumen ejecutivo con todos los totales calculados automáticamente a partir de los datos registrados.</p>
+
+    <h3>Indicadores de demanda en parada</h3>
+    <div class="metric-row">
+      <div class="metric-card metric-blue"><div class="metric-val">—</div><div class="metric-label">Llegaron</div></div>
+      <div class="metric-card metric-red"><div class="metric-val">—</div><div class="metric-label">Se Retiraron</div></div>
+      <div class="metric-card metric-amber"><div class="metric-val">—</div><div class="metric-label">Máx. en Espera</div></div>
+      <div class="metric-card metric-violet"><div class="metric-val">—</div><div class="metric-label">Intervalos</div></div>
+    </div>
+
+    <h3>Indicadores de flujo en buses</h3>
+    <div class="metric-row">
+      <div class="metric-card metric-green"><div class="metric-val">—</div><div class="metric-label">Buses</div></div>
+      <div class="metric-card metric-green"><div class="metric-val">—</div><div class="metric-label">Subieron</div></div>
+      <div class="metric-card metric-red"><div class="metric-val">—</div><div class="metric-label">Bajaron</div></div>
+    </div>
+
+    <p>Esta vista es de <strong>solo lectura</strong>. Para editar los datos de una sesión, use el botón "Retomar" en el historial (solo disponible en sesiones no cerradas).</p>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MÓDULO 2: HISTORIAL PERSONAL
+  ════════════════════════════════════════ -->
+  <div id="historial" class="module page-break">
+    <div class="section-header">
+      <div class="section-tag">Módulo 2</div>
+      <div class="section-title">Historial Personal</div>
+      <div class="section-desc">Consulte, retome y sincronice sus sesiones de recolección.</div>
+    </div>
+
+    <div class="module-header" style="margin-top:24px">
+      <div class="module-icon icon-amber">🕐</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 08</div>
+        <div class="module-title">Historial de Sesiones</div>
+        <div class="module-subtitle">Mis Registros — ver y gestionar todas las sesiones propias</div>
+      </div>
+    </div>
+
+    <div class="content-with-image">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Historial de Datos</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/subir_nube.jpeg" alt="Historial de Sesiones con sincronización" />
+            <!-- Banner naranja de sincronización -->
+            <div class="ann-box amber" style="top:16%;left:3%;width:92%;height:12%;">
+              <span class="ann-badge amber">1</span>
+            </div>
+            <!-- Botón Subir -->
+            <div class="ann-box green" style="top:19%;left:68%;width:26%;height:8%;">
+              <span class="ann-badge green">2</span>
+            </div>
+            <!-- Lista de sesiones -->
+            <div class="ann-box blue" style="top:32%;left:3%;width:92%;height:55%;">
+              <span class="ann-badge blue">3</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot amber">1</span><span><strong>Banner naranja</strong>: aparece cuando hay turnos guardados localmente que aún no han sido enviados a la nube.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Botón "Subir"</strong>: envía todos los registros pendientes al servidor con un solo toque.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">3</span><span><strong>Lista de sesiones</strong>: muestra turno, fecha, jornada y estado ("Turno Completado" o pendiente).</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>La pantalla <strong>"Historial de Datos"</strong> muestra todas las sesiones de recolección del usuario actual, tanto las completadas como las que aún están en progreso.</p>
+
+        <h3>Acciones disponibles por sesión</h3>
+    <table class="fields-table">
+      <thead>
+        <tr><th>Acción</th><th>Disponible cuando</th><th>Qué hace</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Retomar</strong></td>
+          <td>Sesión en estado "activo" o pendiente</td>
+          <td>Carga la sesión y abre el panel de recolección para continuar registrando datos.</td>
+        </tr>
+        <tr>
+          <td><strong>Ver Detalles</strong></td>
+          <td>Cualquier sesión</td>
+          <td>Abre el Resumen de Turno con los totales calculados.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Sincronización de datos pendientes</h3>
+    <p>Cuando existen sesiones guardadas localmente que aún no han sido subidas al servidor, aparece un <strong>banner naranja</strong> en la parte superior de la pantalla con el número de turnos pendientes.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Verificar conexión a internet</div>
+          <div class="step-desc">Asegúrese de tener Wi-Fi o datos móviles activos antes de sincronizar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Tocar el botón "Subir"</div>
+          <div class="step-desc">En el banner naranja. La app enviará todos los registros pendientes a la nube.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Verificar el resultado</div>
+          <div class="step-desc">Un mensaje de confirmación indicará si la sincronización fue exitosa o si hubo un error.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <span class="info-icon">📶</span>
+      <div class="info-content">
+        <div class="info-title">Los datos están seguros aunque no sincronice de inmediato</div>
+        <p>Todo se almacena en el dispositivo hasta que usted lo suba. No existe límite de tiempo para sincronizar, pero se recomienda hacerlo al final de cada jornada.</p>
+      </div>
+    </div>
+      </div><!-- /text-side -->
+    </div><!-- /content-with-image -->
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MÓDULO 3: HISTORIAL GLOBAL
+  ════════════════════════════════════════ -->
+  <div class="section-header page-break">
+    <div class="section-tag">Módulo 3</div>
+    <div class="section-title">Cobertura Histórica Global</div>
+    <div class="section-desc">Vista consolidada de todas las observaciones del equipo, organizada por día y turno.</div>
+  </div>
+
+  <div id="global" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-violet">📅</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 09</div>
+        <div class="module-title">Cobertura Histórica (Mapa de Calor)</div>
+        <div class="module-subtitle">Visualizar la cobertura de observaciones de todo el equipo</div>
+      </div>
+    </div>
+
+    <p>Esta pantalla muestra un <strong>mapa de calor</strong> que indica en qué días y franjas horarias se han realizado observaciones, considerando todos los usuarios del sistema.</p>
+
+    <!-- Imagen principal: OUTBOUND -->
+    <div class="screenshot-row" style="gap:16px; align-items:flex-start; margin:20px 0;">
+      <div class="screenshot-main">
+        <span class="screenshot-label">Vista OUTBOUND</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/historial_global.jpeg" alt="Cobertura Histórica OUTBOUND" />
+          <!-- Filtro desplegable -->
+          <div class="ann-box amber" style="top:28%;left:4%;width:90%;height:8%;">
+            <span class="ann-badge amber">1</span>
+          </div>
+          <!-- Cabecera de columnas -->
+          <div class="ann-box blue" style="top:38%;left:14%;width:82%;height:7%;">
+            <span class="ann-badge blue">2</span>
+          </div>
+          <!-- Celda activa MAR / Mañana (valor 2) -->
+          <div class="ann-box green" style="top:55%;left:15%;width:26%;height:9%;">
+            <span class="ann-badge green">3</span>
+          </div>
+          <!-- Fila sin cobertura (LUN) -->
+          <div class="ann-box red" style="top:45%;left:4%;width:90%;height:8%;">
+            <span class="ann-badge red">4</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot amber">1</span><span><strong>Filtro de recorrido</strong>: selector OUTBOUND / INBOUND.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Turnos (columnas)</strong>: Mañana 08h00–11h00, Mediodía 11h00–14h00, Tarde 14h00–16h30.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">3</span><span><strong>Celda activa</strong>: fondo azul con número = sesiones registradas (ej. MAR·Mañana = 2).</span></div>
+          <div class="ann-legend-item"><span class="ann-dot red">4</span><span><strong>Celda vacía</strong>: valor 0, gris tenue, sin cobertura registrada.</span></div>
+        </div>
+      </div>
+
+      <div class="screenshot-main">
+        <span class="screenshot-label">Selector de filtro</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/historial_global_opciones.jpeg" alt="Selector Puntos de Entrada / Salida" />
+          <!-- Panel desplegable -->
+          <div class="ann-box blue" style="top:63%;left:3%;width:93%;height:27%;">
+            <span class="ann-badge blue">1</span>
+          </div>
+          <!-- Opción Puntos de Entrada -->
+          <div class="ann-box green" style="top:66%;left:5%;width:88%;height:10%;">
+            <span class="ann-badge green">2</span>
+          </div>
+          <!-- Opción Puntos de Salida -->
+          <div class="ann-box amber" style="top:77%;left:5%;width:88%;height:8%;">
+            <span class="ann-badge amber">3</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Panel de opciones</strong>: se despliega al tocar el selector.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Puntos de Entrada (INBOUND)</strong>: paradas del sentido de ida. Marcado con ✓ cuando está activo.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot amber">3</span><span><strong>Puntos de Salida (OUTBOUND)</strong>: paradas del sentido de vuelta.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Cómo leer el mapa de calor</h3>
+    <p>El eje vertical muestra los <strong>días de la semana</strong> (Lunes a Viernes), y el eje horizontal las <strong>franjas horarias</strong>. Cada celda representa el número de sesiones registradas para esa combinación:</p>
+    <ul style="margin: 8px 0 16px 20px; color: #334155;">
+      <li><strong>Celda azul con número mayor</strong> = mayor cobertura (más sesiones registradas).</li>
+      <li><strong>Celda gris con 0</strong> = sin observaciones en ese día y turno.</li>
+    </ul>
+
+    <h3>Filtro por tipo de recorrido e impacto en los datos</h3>
+    <p>El selector en la parte superior permite ver la cobertura de <strong>Puntos de Entrada (INBOUND)</strong> o <strong>Puntos de Salida (OUTBOUND)</strong> de forma independiente. Los datos cambian según el filtro activo:</p>
+
+    <!-- Comparación OUTBOUND vs INBOUND -->
+    <div class="screenshot-row" style="gap:16px; align-items:flex-start; margin:16px 0;">
+      <div class="screenshot-main">
+        <span class="screenshot-label">OUTBOUND — Puntos de Salida</span>
+        <div class="screenshot-frame size-md">
+          <img src="imgs/historial_global.jpeg" alt="Cobertura OUTBOUND" />
+        </div>
+        <div class="screenshot-caption" style="font-size:8pt; margin-top:4px;">MAR tiene 2 sesiones en Mañana, VIE tiene 1 en Tarde.</div>
+      </div>
+      <div class="screenshot-main">
+        <span class="screenshot-label">INBOUND — Puntos de Entrada</span>
+        <div class="screenshot-frame size-md">
+          <img src="imgs/historial_global_2.jpeg" alt="Cobertura INBOUND" />
+        </div>
+        <div class="screenshot-caption" style="font-size:8pt; margin-top:4px;">LUN tiene 4 sesiones en Mañana; JUE cubre Mañana y Mediodía.</div>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <span class="info-icon">💡</span>
+      <div class="info-content">
+        <div class="info-title">Interpretación práctica</div>
+        <p>Un día con valor 0 en todos los turnos significa que ningún observador registró datos en ese sentido durante esa jornada. Use esta vista para identificar brechas de cobertura y planificar asignaciones.</p>
+      </div>
+    </div>
+
+    <h3>Navegar al desglose por parada</h3>
+    <p>Toque cualquier celda activa (con valor mayor a 0) para ver el detalle de qué paradas fueron observadas en ese día y turno específico.</p>
+  </div>
+
+  <div id="desglose" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-violet">📊</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 10</div>
+        <div class="module-title">Desglose por Parada</div>
+        <div class="module-subtitle">Detalle de sesiones registradas en cada punto de parada</div>
+      </div>
+    </div>
+
+    <p>Al tocar una celda del mapa de calor, se accede a esta pantalla que muestra, para el día y turno seleccionados, cuántas sesiones se registraron en <strong>cada parada individual</strong>.</p>
+
+    <h3>Información mostrada</h3>
+    <table class="fields-table">
+      <thead>
+        <tr><th>Elemento</th><th>Descripción</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Nombre del día</strong></td><td>El día seleccionado (ej. "Lunes").</td></tr>
+        <tr><td><strong>Franja horaria</strong></td><td>El turno correspondiente (ej. "08h00–11h00").</td></tr>
+        <tr><td><strong>Total del turno</strong></td><td>Número total de sesiones registradas en todos los puntos.</td></tr>
+        <tr><td><strong>Actividad por Parada</strong></td><td>Lista de paradas con un indicador de barra proporcional al número de sesiones. Ordenadas de mayor a menor.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MÓDULO 4: ESTUDIO A BORDO
+  ════════════════════════════════════════ -->
+  <div class="section-header page-break">
+    <div class="section-tag">Módulo 4</div>
+    <div class="section-title">Estudio a Bordo</div>
+    <div class="section-desc">Registro del flujo de pasajeros en cada parada durante un recorrido completo a bordo de un bus.</div>
+  </div>
+
+  <div id="ride-inicio" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-green">🚌</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 11</div>
+        <div class="module-title">Inicio de Recorrido</div>
+        <div class="module-subtitle">Configurar los parámetros de un nuevo recorrido en bus</div>
+      </div>
+    </div>
+
+    <p>Esta pantalla permite iniciar un nuevo recorrido a bordo de un bus. Antes de comenzar a registrar el flujo de pasajeros en cada parada, el observador debe completar tres campos obligatorios que identifican el vehículo, la franja horaria y el sentido del trayecto.</p>
+
+    <!-- Fila de tres capturas -->
+    <div class="screenshot-row" style="gap:14px; align-items:flex-start; margin:18px 0;">
+
+      <!-- paso6_1_menu: formulario principal -->
+      <div class="screenshot-main">
+        <span class="screenshot-label">Formulario de inicio</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/paso6/paso6_1_menu.jpeg" alt="Pantalla de Inicio de Recorrido" />
+          <!-- Banner sincronización pendiente -->
+          <div class="ann-box amber" style="top:13%;left:3%;width:92%;height:8%;">
+            <span class="ann-badge amber">1</span>
+          </div>
+          <!-- Selector matrícula -->
+          <div class="ann-box blue" style="top:27%;left:3%;width:92%;height:9%;">
+            <span class="ann-badge blue">2</span>
+          </div>
+          <!-- Selector turno -->
+          <div class="ann-box blue" style="top:41%;left:3%;width:92%;height:15%;">
+            <span class="ann-badge blue">3</span>
+          </div>
+          <!-- Selector dirección -->
+          <div class="ann-box blue" style="top:60%;left:3%;width:92%;height:9%;">
+            <span class="ann-badge blue">4</span>
+          </div>
+          <!-- Botón Iniciar Recorrido -->
+          <div class="ann-box green" style="top:91%;left:3%;width:92%;height:7%;">
+            <span class="ann-badge green">5</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot amber">1</span><span><strong>Banner naranja</strong>: indica recorridos pendientes de subir a la nube. Toque para sincronizar antes de iniciar.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Matrícula / Disco del Bus</strong>: selector con el catálogo de vehículos del sistema.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot blue">3</span><span><strong>Turno</strong>: franja horaria de la jornada (08h00–11h00, 11h00–14h00 o 14h00–16h30).</span></div>
+          <div class="ann-legend-item"><span class="ann-dot blue">4</span><span><strong>Dirección del Recorrido</strong>: Ida (INBOUND) o Vuelta (OUTBOUND).</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">5</span><span><strong>Iniciar Recorrido</strong>: se habilita solo cuando los tres campos están completos.</span></div>
+        </div>
+      </div>
+
+      <!-- paso6_2_buses: listado de matrículas -->
+      <div class="screenshot-main">
+        <span class="screenshot-label">Buses disponibles</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/paso6/paso6_2_buses.jpeg" alt="Selector de matrículas de bus" />
+          <!-- Panel desplegable -->
+          <div class="ann-box blue" style="top:48%;left:2%;width:96%;height:50%;">
+            <span class="ann-badge blue">1</span>
+          </div>
+          <!-- Lista de buses -->
+          <div class="ann-box green" style="top:56%;left:4%;width:88%;height:36%;">
+            <span class="ann-badge green">2</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Panel "Buses Disponibles"</strong>: se despliega al tocar el selector de matrícula.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Matrículas reales</strong>: GEA-5096, GEO-1568, GEA-5097, GXP-0037, GEA-5568, GEA-5569. <em>Nota: GEA-10 es un vehículo de prueba.</em></span></div>
+        </div>
+      </div>
+
+      <!-- paso6_3_direccion: selector de dirección -->
+      <div class="screenshot-main">
+        <span class="screenshot-label">Dirección del recorrido</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/paso6/paso6_3_direccion.jpeg" alt="Selector de dirección Ida / Vuelta" />
+          <!-- Panel desplegable -->
+          <div class="ann-box blue" style="top:56%;left:2%;width:96%;height:35%;">
+            <span class="ann-badge blue">1</span>
+          </div>
+          <!-- Opción Ida -->
+          <div class="ann-box green" style="top:66%;left:4%;width:88%;height:9%;">
+            <span class="ann-badge green">2</span>
+          </div>
+          <!-- Opción Vuelta -->
+          <div class="ann-box amber" style="top:76%;left:4%;width:88%;height:9%;">
+            <span class="ann-badge amber">3</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Panel "Dirección"</strong>: solo dos opciones posibles para el sentido del recorrido.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Ida (INBOUND)</strong>: sentido de ida de la ruta (Puntos de Entrada).</span></div>
+          <div class="ann-legend-item"><span class="ann-dot amber">3</span><span><strong>Vuelta (OUTBOUND)</strong>: sentido de regreso (Puntos de Salida).</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>Campos del formulario</h3>
+    <table class="fields-table">
+      <thead>
+        <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Matrícula / Disco del Bus</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Selector desplegable</td>
+          <td>Vehículo en el que se realizará el estudio. Las opciones (GEA-5096, GEO-1568, GEA-5097, GXP-0037, GEA-5568, GEA-5569) corresponden a buses reales de la flota. <em>GEA-10 es exclusivamente para pruebas.</em></td>
+        </tr>
+        <tr>
+          <td><strong>Turno</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Botones de opción</td>
+          <td>
+            <div class="chip-group">
+              <span class="chip">08h00–11h00</span>
+              <span class="chip">11h00–14h00</span>
+              <span class="chip">14h00–16h30</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Dirección del Recorrido</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Selector desplegable</td>
+          <td>
+            <strong>Ida (INBOUND)</strong> — sentido de ida, paradas de entrada.<br>
+            <strong>Vuelta (OUTBOUND)</strong> — sentido de regreso, paradas de salida.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Datos pendientes de sincronizar</h3>
+    <p>Si existen recorridos guardados localmente, aparecerá un <strong>banner naranja</strong> en la parte superior indicando la cantidad pendiente. Tóquelo para sincronizarlos con la nube antes de iniciar un nuevo recorrido.</p>
+
+    <div class="callout">
+      <p>✅ Si ya tiene un recorrido en curso, la app mostrará un banner con la opción <strong>"Ir al Recorrido Activo"</strong> para retomarlo directamente sin perder datos.</p>
+    </div>
+  </div>
+
+  <div id="ride-dashboard" class="module">
+    <div class="module-header">
+      <div class="module-icon icon-green">📍</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 12</div>
+        <div class="module-title">Registro de Paradas durante el Recorrido</div>
+        <div class="module-subtitle">Capturar el flujo de pasajeros en cada punto del trayecto</div>
+      </div>
+    </div>
+
+    <p>Una vez iniciado el recorrido, esta pantalla es el panel de trabajo central del recolector. Permite capturar el flujo de pasajeros en cada punto del trayecto, parada por parada, hasta completar el recorrido.</p>
+
+    <!-- Fila con las dos capturas -->
+    <div class="screenshot-row" style="gap:16px; align-items:flex-start; margin:18px 0;">
+
+      <!-- paso6_4_menu_estudio_abordo: panel de registro de parada -->
+      <div class="screenshot-main">
+        <span class="screenshot-label">Panel de registro de parada</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/paso6/paso6_4_menu_estudio_abordo.jpeg" alt="Panel Estudio a Bordo – Registro de Parada" />
+          <!-- Banner verde de estado del recorrido -->
+          <div class="ann-box green" style="top:12%;left:3%;width:92%;height:9%;">
+            <span class="ann-badge green">1</span>
+          </div>
+          <!-- Sección Registrar Parada: selector de parada -->
+          <div class="ann-box blue" style="top:24%;left:3%;width:92%;height:16%;">
+            <span class="ann-badge blue">2</span>
+          </div>
+          <!-- Hora de llegada -->
+          <div class="ann-box blue" style="top:41%;left:3%;width:92%;height:9%;">
+            <span class="ann-badge blue">3</span>
+          </div>
+          <!-- Contadores Bajan / Suben -->
+          <div class="ann-box red" style="top:52%;left:3%;width:92%;height:16%;">
+            <span class="ann-badge red">4</span>
+          </div>
+          <!-- Campo Observaciones -->
+          <div class="ann-box amber" style="top:70%;left:3%;width:92%;height:13%;">
+            <span class="ann-badge amber">5</span>
+          </div>
+          <!-- Botón Guardar Parada -->
+          <div class="ann-box violet" style="top:85%;left:3%;width:92%;height:7%;">
+            <span class="ann-badge violet">6</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot green">1</span><span><strong>Banner de recorrido activo</strong>: muestra la matrícula (GXP-0037), dirección (Ida), turno (08h00–11h00), hora de inicio y número de paradas registradas.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Parada</strong>: selector desplegable para elegir el punto donde el bus se ha detenido.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot blue">3</span><span><strong>Hora de llegada</strong>: se rellena automáticamente con la hora actual; editable manualmente si es necesario.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot red">4</span><span><strong>Bajan / Suben</strong>: contadores +/− para registrar el flujo de pasajeros. Rojo = bajan, Azul = suben.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot amber">5</span><span><strong>Observaciones</strong>: campo de texto libre para anotar anomalías, incidentes o cualquier evento relevante en la parada.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot violet">6</span><span><strong>Guardar Parada</strong>: guarda el registro y limpia el formulario para la siguiente parada.</span></div>
+        </div>
+      </div>
+
+      <!-- paso6_4.1_sel_entrada_output: selector de paradas -->
+      <div class="screenshot-main">
+        <span class="screenshot-label">Selector de paradas (INBOUND)</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/paso6/paso6_4.1_sel_entrada_output.jpeg" alt="Selector de paradas Entrada INBOUND" />
+          <!-- Panel desplegable completo -->
+          <div class="ann-box blue" style="top:37%;left:2%;width:96%;height:62%;">
+            <span class="ann-badge blue">1</span>
+          </div>
+          <!-- Etiqueta ENTRADA (INBOUND) -->
+          <div class="ann-box green" style="top:42%;left:4%;width:55%;height:5%;">
+            <span class="ann-badge green">2</span>
+          </div>
+          <!-- Lista de paradas -->
+          <div class="ann-box green" style="top:48%;left:4%;width:88%;height:45%;">
+            <span class="ann-badge green">3</span>
+          </div>
+          <!-- Grupo SALIDA al pie (parcialmente visible) -->
+          <div class="ann-box amber" style="top:94%;left:4%;width:50%;height:4%;">
+            <span class="ann-badge amber">4</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Panel de selección</strong>: se despliega al tocar el campo "Parada". Las opciones se filtran según la dirección del recorrido activo.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Grupo ENTRADA (INBOUND)</strong>: paradas del sentido de ida agrupadas bajo su etiqueta.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">3</span><span><strong>Paradas disponibles</strong>: Garita Entrada · Facultad Ciencias de la Vida · Biblioteca · Fac. Ciencias Sociales y Humanísticas · Fac. Ingeniería en Computación y Electricidad · Estación de Buses · Fac. Arte, Diseño y Comunicación Audiovisual.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot amber">4</span><span><strong>Grupo SALIDA (OUTBOUND)</strong>: visible al desplazarse, contiene las paradas del sentido de regreso.</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>Campos por parada</h3>
+    <table class="fields-table">
+      <thead>
+        <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Parada</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Selector desplegable</td>
+          <td>Punto de parada actual. Las opciones se agrupan en <strong>Entrada (INBOUND)</strong> y <strong>Salida (OUTBOUND)</strong> según la dirección configurada al inicio.</td>
+        </tr>
+        <tr>
+          <td><strong>Hora de llegada</strong> <span class="optional-badge">Auto</span></td>
+          <td>Campo HH:MM</td>
+          <td>Se rellena automáticamente con la hora del dispositivo al seleccionar la parada. Puede corregirse manualmente si el bus llegó antes de que se registrara.</td>
+        </tr>
+        <tr>
+          <td><strong>Bajan</strong></td>
+          <td>Contador +/−</td>
+          <td>Pasajeros que descienden del bus en esta parada. El botón rojo decrementa; el valor no puede ser negativo.</td>
+        </tr>
+        <tr>
+          <td><strong>Suben</strong></td>
+          <td>Contador +/−</td>
+          <td>Pasajeros que abordan el bus en esta parada. El botón azul incrementa.</td>
+        </tr>
+        <tr>
+          <td><strong>Observaciones</strong> <span class="optional-badge">Opcional</span></td>
+          <td>Texto libre</td>
+          <td>Espacio para registrar anomalías, incidentes o eventos relevantes en la parada (ej. "bus llegó lleno", "parada sin señalización").</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Cómo registrar cada parada</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Seleccionar la parada actual</div>
+          <div class="step-desc">Tocar el selector "Parada" y elegir el punto donde el bus acaba de detenerse. La hora de llegada se rellena sola.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Registrar el flujo de pasajeros</div>
+          <div class="step-desc">Usar los contadores +/− de <strong>Bajan</strong> y <strong>Suben</strong> mientras el bus permanece en la parada.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Añadir observaciones (si aplica)</div>
+          <div class="step-desc">Anotar cualquier novedad relevante en el campo de texto libre.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Tocar "Guardar Parada"</div>
+          <div class="step-desc">El registro queda guardado localmente y el formulario se limpia para la siguiente parada. El contador del banner verde se incrementa.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Flujo completo: ejemplo de registro</h3>
+    <p>A continuación se ilustra el ciclo completo de un recorrido de ejemplo con dos paradas, desde el primer registro hasta la finalización.</p>
+
+    <!-- Paso A: Garita Entrada -->
+    <div class="content-with-image" style="margin-bottom:24px;">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Parada 1 — Garita Entrada</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso6/paso6_5_garita.jpeg" alt="Registro Garita Entrada" />
+            <!-- Parada seleccionada -->
+            <div class="ann-box blue" style="top:22%;left:3%;width:92%;height:8%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Hora de llegada -->
+            <div class="ann-box blue" style="top:33%;left:3%;width:92%;height:8%;">
+              <span class="ann-badge blue">2</span>
+            </div>
+            <!-- Contadores: Bajan 0, Suben 10 -->
+            <div class="ann-box green" style="top:46%;left:3%;width:92%;height:18%;">
+              <span class="ann-badge green">3</span>
+            </div>
+            <!-- Botón Guardar Parada -->
+            <div class="ann-box violet" style="top:87%;left:3%;width:92%;height:7%;">
+              <span class="ann-badge violet">4</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Parada</strong>: "Garita Entrada" seleccionada como primer punto del recorrido.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Hora de llegada</strong>: 21:04, registrada automáticamente al seleccionar la parada.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">3</span><span><strong>Pasajeros</strong>: Bajan 0 · Suben 10 — el bus parte desde su primera parada cargando 10 pasajeros.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot violet">4</span><span><strong>Guardar Parada</strong>: confirma el registro y lo almacena localmente.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>El recorrido empieza en la <strong>Garita Entrada</strong>. Al seleccionarla, la hora 21:04 se rellena de forma automática. El recolector registra <strong>10 pasajeros que suben</strong> y ninguno que baja (punto de partida). Al tocar <strong>"Guardar Parada"</strong>, el registro queda almacenado en el dispositivo.</p>
+        <div class="info-box blue" style="margin-top:12px;">
+          <span class="info-icon">📍</span>
+          <div class="info-content">
+            <div class="info-title">Detalle de parada guardada</div>
+            <p>Después de guardar, toque el registro en el historial inferior para ver la ficha completa con hora de llegada, hora de salida, subieron y bajaron.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso B: Detalle guardado (modal) -->
+    <div class="content-with-image" style="margin-bottom:24px;">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Detalle de parada guardada</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso6/paso6_6_historial_paradas.jpeg" alt="Modal detalle Garita Entrada guardada" />
+            <!-- Modal inferior -->
+            <div class="ann-box blue" style="top:56%;left:2%;width:96%;height:42%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Subieron 10 -->
+            <div class="ann-box green" style="top:62%;left:4%;width:44%;height:14%;">
+              <span class="ann-badge green">2</span>
+            </div>
+            <!-- Bajaron 0 -->
+            <div class="ann-box red" style="top:62%;left:52%;width:44%;height:14%;">
+              <span class="ann-badge red">3</span>
+            </div>
+            <!-- Hora llegada / salida -->
+            <div class="ann-box amber" style="top:78%;left:4%;width:88%;height:12%;">
+              <span class="ann-badge amber">4</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Panel de detalle</strong>: se abre al tocar cualquier registro del historial inferior.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Subieron</strong>: 10 pasajeros abordaron en Garita Entrada.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot red">3</span><span><strong>Bajaron</strong>: 0 pasajeros descendieron.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">4</span><span><strong>Llegada / Salida</strong>: 21:04 — hora de llegada del bus y salida de la parada.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Al tocar un registro guardado en la sección <strong>"Paradas Registradas"</strong>, la app despliega un panel inferior con el resumen completo: pasajeros que subieron y bajaron, hora de llegada y hora de salida. Este panel es de solo lectura y permite verificar los datos antes de continuar al siguiente punto.</p>
+        <p>En este ejemplo, la <strong>Garita Entrada</strong> muestra correctamente: <strong>Subieron 10 · Bajaron 0 · Llegada 21:04 · Salida 21:04</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Paso C: Facultad Ciencias de la Vida -->
+    <div class="content-with-image" style="margin-bottom:24px;">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Parada 2 — Facultad Ciencias de la Vida</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso6/paso6_7_fcv.jpeg" alt="Registro FCV" />
+            <!-- Banner verde: 1 parada -->
+            <div class="ann-box green" style="top:12%;left:3%;width:92%;height:9%;">
+              <span class="ann-badge green">1</span>
+            </div>
+            <!-- Parada seleccionada -->
+            <div class="ann-box blue" style="top:27%;left:3%;width:92%;height:8%;">
+              <span class="ann-badge blue">2</span>
+            </div>
+            <!-- Hora 21:13 -->
+            <div class="ann-box blue" style="top:37%;left:3%;width:92%;height:8%;">
+              <span class="ann-badge blue">3</span>
+            </div>
+            <!-- Bajan 5, Suben 10 -->
+            <div class="ann-box red" style="top:48%;left:3%;width:92%;height:18%;">
+              <span class="ann-badge red">4</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot green">1</span><span><strong>Banner verde actualizado</strong>: muestra "1 parada" ya registrada (GEA-5096 · Ida · 08h00–11h00 · desde 21:06).</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">2</span><span><strong>Parada</strong>: "Facultad Ciencias de la Vida" — segundo punto del trayecto.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot blue">3</span><span><strong>Hora de llegada</strong>: 21:13 — registrada automáticamente.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot red">4</span><span><strong>Pasajeros</strong>: Bajan 5 · Suben 10 — del bus descienden 5 pasajeros y suben 10 nuevos.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>El bus llega a las 21:13 a la <strong>Facultad de Ciencias de la Vida</strong>. El banner verde ya refleja <strong>1 parada previamente registrada</strong>. El recolector anota que <strong>5 pasajeros bajan</strong> y <strong>10 suben</strong>, y procede a guardar el registro de esta segunda parada.</p>
+        <p>Este patrón se repite para cada punto del trayecto hasta completar el recorrido.</p>
+      </div>
+    </div>
+
+    <!-- Paso D: Historial completo -->
+    <h3>Historial de paradas registradas</h3>
+    <div class="content-with-image" style="margin-bottom:24px;">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Historial del recorrido</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso6/paso6_historial_completo.jpeg" alt="Historial completo de paradas" />
+            <!-- Sección Paradas Registradas -->
+            <div class="ann-box blue" style="top:56%;left:3%;width:92%;height:5%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Facultad Ciencias de la Vida -->
+            <div class="ann-box green" style="top:62%;left:3%;width:92%;height:10%;">
+              <span class="ann-badge green">2</span>
+            </div>
+            <!-- Garita Entrada -->
+            <div class="ann-box green" style="top:73%;left:3%;width:92%;height:10%;">
+              <span class="ann-badge green">3</span>
+            </div>
+            <!-- Botón Finalizar Recorrido -->
+            <div class="ann-box red" style="top:85%;left:3%;width:92%;height:7%;">
+              <span class="ann-badge red">4</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Paradas Registradas</strong>: encabezado de la sección de historial, visible bajo el botón "Guardar Parada".</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Facultad Ciencias de la Vida</strong>: 21:13 · ↑10 ↓5 — segunda parada, más reciente (orden cronológico inverso).</span></div>
+            <div class="ann-legend-item"><span class="ann-dot green">3</span><span><strong>Garita Entrada</strong>: 21:07 · ↑10 ↓0 — primera parada del recorrido.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot red">4</span><span><strong>Finalizar Recorrido</strong>: botón rojo al pie; se habilita cuando hay al menos una parada registrada.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>La sección <strong>"Paradas Registradas"</strong> muestra el historial completo del recorrido en orden cronológico inverso (la más reciente primero). Cada tarjeta resume: nombre de la parada, hora de llegada, pasajeros que subieron (↑) y que bajaron (↓).</p>
+        <p>Toque cualquier tarjeta para abrir el panel de detalle con los datos completos.</p>
+        <table class="fields-table" style="margin-top:10px; font-size:8.5pt;">
+          <thead><tr><th>Parada</th><th>Hora</th><th>Suben</th><th>Bajan</th></tr></thead>
+          <tbody>
+            <tr><td>Garita Entrada</td><td>21:07</td><td>10</td><td>0</td></tr>
+            <tr><td>Facultad Ciencias de la Vida</td><td>21:13</td><td>10</td><td>5</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Paso E: Finalizar Recorrido (modal) -->
+    <h3>Finalizar el recorrido</h3>
+    <div class="content-with-image" style="margin-bottom:24px;">
+      <div class="img-side">
+        <div class="screenshot-main">
+          <span class="screenshot-label">Confirmación de cierre</span>
+          <div class="screenshot-frame size-lg">
+            <img src="imgs/paso6/paso7.jpeg" alt="Modal Finalizar Recorrido" />
+            <!-- Modal -->
+            <div class="ann-box blue" style="top:40%;left:3%;width:92%;height:30%;">
+              <span class="ann-badge blue">1</span>
+            </div>
+            <!-- Botón Cancelar -->
+            <div class="ann-box amber" style="top:61%;left:5%;width:40%;height:7%;">
+              <span class="ann-badge amber">2</span>
+            </div>
+            <!-- Botón Finalizar -->
+            <div class="ann-box red" style="top:61%;left:50%;width:38%;height:7%;">
+              <span class="ann-badge red">3</span>
+            </div>
+          </div>
+          <div class="ann-legend">
+            <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Modal de confirmación</strong>: advierte que no se podrán añadir más paradas una vez finalizado el recorrido.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot amber">2</span><span><strong>Cancelar</strong>: cierra el modal y regresa al panel sin cambios.</span></div>
+            <div class="ann-legend-item"><span class="ann-dot red">3</span><span><strong>Finalizar</strong>: confirma el cierre. El recorrido queda guardado localmente y listo para sincronizar.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-side">
+        <p>Al presionar <strong>"Finalizar Recorrido"</strong> (botón rojo al pie del panel), la app muestra un modal de confirmación. Si el recolector confirma con <strong>"Finalizar"</strong>, el recorrido se cierra y pasa al estado <em>pendiente de sincronizar</em>.</p>
+        <div class="callout" style="border-color:#ef4444; background:#fff5f5; margin-top:12px;">
+          <p>⚠️ <strong>Acción irreversible:</strong> una vez finalizado, no es posible añadir ni editar paradas. Asegúrese de haber registrado todos los puntos del trayecto antes de confirmar.</p>
+        </div>
+        <div class="info-box blue" style="margin-top:12px;">
+          <span class="info-icon">☁️</span>
+          <div class="info-content">
+            <div class="info-title">Próximo paso: sincronizar</div>
+            <p>El recorrido finalizado aparecerá como "1 recorrido pendiente de sincronizar" en el banner naranja de la pantalla de Inicio de Recorrido. Tóquelo para subirlo a la nube cuando disponga de conexión.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MÓDULO 5: TELEMETRÍA
+  ════════════════════════════════════════ -->
+  <div id="telemetria" class="module page-break">
+    <div class="section-header">
+      <div class="section-tag">Módulo 5</div>
+      <div class="section-title">Telemetría de Ruta</div>
+      <div class="section-desc">Medición de la cobertura de datos móviles y GPS a lo largo de las rutas de transporte.</div>
+    </div>
+
+    <div class="module-header" style="margin-top:24px">
+      <div class="module-icon icon-teal">📡</div>
+      <div class="module-meta">
+        <div class="module-number">Sección 13</div>
+        <div class="module-title">Telemetría de Conectividad</div>
+        <div class="module-subtitle">Capturar puntos de control de conectividad GPS durante el recorrido</div>
+      </div>
+    </div>
+
+    <p>Este módulo registra puntos de datos de conectividad de forma periódica mientras el observador recorre una ruta. Los datos ayudan a identificar zonas sin señal o con cobertura deficiente.</p>
+
+    <h3>Configuración previa</h3>
+
+    <div class="screenshot-row" style="gap:16px; align-items:flex-start; margin:16px 0;">
+
+      <!-- Pantalla principal de configuración -->
+      <div class="screenshot-main">
+        <span class="screenshot-label">Configurar Sesión</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/telemetria.jpeg" alt="Configuración de Telemetría de Ruta" />
+          <!-- Intervalo de pings -->
+          <div class="ann-box blue" style="top:47%;left:3%;width:93%;height:10%;">
+            <span class="ann-badge blue">1</span>
+          </div>
+          <!-- Valor numérico del intervalo -->
+          <div class="ann-box violet" style="top:48%;left:63%;width:18%;height:8%;">
+            <span class="ann-badge violet">2</span>
+          </div>
+          <!-- Botón guardar intervalo -->
+          <div class="ann-box violet" style="top:48%;left:82%;width:13%;height:8%;">
+            <span class="ann-badge violet">3</span>
+          </div>
+          <!-- Sección detalles del recorrido -->
+          <div class="ann-box amber" style="top:58%;left:3%;width:93%;height:28%;">
+            <span class="ann-badge amber">4</span>
+          </div>
+          <!-- Selector operadora -->
+          <div class="ann-box green" style="top:65%;left:5%;width:88%;height:8%;">
+            <span class="ann-badge green">5</span>
+          </div>
+          <!-- Campo descripción -->
+          <div class="ann-box green" style="top:75%;left:5%;width:88%;height:10%;">
+            <span class="ann-badge green">6</span>
+          </div>
+          <!-- Botón Iniciar Grabación -->
+          <div class="ann-box red" style="top:88%;left:3%;width:93%;height:8%;">
+            <span class="ann-badge red">7</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Intervalo de pings (seg)</strong>: con qué frecuencia la app captura un punto GPS.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot violet">2</span><span><strong>Valor actual</strong>: por defecto 10 segundos. Editable directamente.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot violet">3</span><span><strong>Guardar intervalo</strong>: persiste el valor en el dispositivo entre sesiones.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot amber">4</span><span><strong>Detalles del Recorrido</strong>: sección con los campos obligatorios antes de grabar.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">5</span><span><strong>Operadora de datos</strong>: selector desplegable con las cooperativas disponibles.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">6</span><span><strong>Descripción de la ruta</strong>: texto libre para contextualizar el recorrido.</span></div>
+          <div class="ann-legend-item"><span class="ann-dot red">7</span><span><strong>Iniciar Grabación</strong>: inicia la captura periódica de puntos de conectividad.</span></div>
+        </div>
+      </div>
+
+      <!-- Selector de operadora -->
+      <div class="screenshot-main">
+        <span class="screenshot-label">Selección de operadora</span>
+        <div class="screenshot-frame size-lg">
+          <img src="imgs/telemtria_menu.jpeg" alt="Selector de operadora de datos" />
+          <!-- Panel desplegable -->
+          <div class="ann-box blue" style="top:56%;left:3%;width:93%;height:42%;">
+            <span class="ann-badge blue">1</span>
+          </div>
+          <!-- Claro -->
+          <div class="ann-box green" style="top:62%;left:5%;width:88%;height:7%;">
+            <span class="ann-badge green">2</span>
+          </div>
+          <!-- Movistar -->
+          <div class="ann-box green" style="top:69%;left:5%;width:88%;height:7%;">
+            <span class="ann-badge green">3</span>
+          </div>
+          <!-- Tuenti -->
+          <div class="ann-box green" style="top:76%;left:5%;width:88%;height:7%;">
+            <span class="ann-badge green">4</span>
+          </div>
+          <!-- CNT -->
+          <div class="ann-box green" style="top:83%;left:5%;width:88%;height:6%;">
+            <span class="ann-badge green">5</span>
+          </div>
+          <!-- ESPOL -->
+          <div class="ann-box green" style="top:89%;left:5%;width:88%;height:6%;">
+            <span class="ann-badge green">6</span>
+          </div>
+        </div>
+        <div class="ann-legend">
+          <div class="ann-legend-item"><span class="ann-dot blue">1</span><span><strong>Panel de operadoras</strong>: se despliega al tocar el selector "¿Qué operadora de datos usas?".</span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">2</span><span><strong>Claro</strong></span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">3</span><span><strong>Movistar</strong></span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">4</span><span><strong>Tuenti</strong></span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">5</span><span><strong>CNT</strong></span></div>
+          <div class="ann-legend-item"><span class="ann-dot green">6</span><span><strong>ESPOL</strong> — red de datos de la institución.</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <table class="fields-table" style="margin-top:8px;">
+      <thead>
+        <tr><th>Parámetro</th><th>Descripción</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Intervalo de pings (seg)</strong></td>
+          <td>Frecuencia de captura de puntos GPS. Mínimo <strong>5 segundos</strong>; por defecto <strong>10 segundos</strong>. El valor se guarda automáticamente y persiste entre sesiones.</td>
+        </tr>
+        <tr>
+          <td><strong>Operadora de Datos</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>
+            Proveedor del plan de datos activo en el dispositivo:
+            <div class="chip-group">
+              <span class="chip">Claro</span><span class="chip">Movistar</span><span class="chip">Tuenti</span><span class="chip">CNT</span><span class="chip active">ESPOL</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Descripción de la ruta</strong> <span class="required-badge">Obligatorio</span></td>
+          <td>Texto libre que describe el recorrido (ej. "Ruta al campus, clima lluvioso"). Contextualiza los datos capturados para su posterior análisis.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Iniciar y detener la grabación</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Configurar intervalo (opcional)</div>
+          <div class="step-desc">Ingresar el valor en el campo "Intervalo de pings" y presionar el ícono de guardar. Por defecto suele ser 10 segundos.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Seleccionar operadora y escribir descripción</div>
+          <div class="step-desc">Ambos campos son obligatorios para habilitar el botón de inicio.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Presionar "Iniciar Grabación"</div>
+          <div class="step-desc">La app comenzará a capturar puntos de control. El ícono central cambiará a un indicador rojo animado y el contador de puntos recolectados irá aumentando.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Recorrer la ruta normalmente</div>
+          <div class="step-desc">No se requiere ninguna acción adicional. La app captura los datos en segundo plano.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-label">Presionar "Finalizar Grabación" al terminar</div>
+          <div class="step-desc">Se guardará la sesión y la app regresará al estado de configuración.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Sincronizar datos de telemetría</h3>
+    <p>Si hay datos de telemetría sin sincronizar, aparecerá un banner naranja mostrando la cantidad de puntos pendientes. Presionar <strong>"Subir"</strong> los enviará al servidor (requiere conexión).</p>
+
+    <div class="info-box blue">
+      <span class="info-icon">🗺️</span>
+      <div class="info-content">
+        <div class="info-title">Los datos se analizan posteriormente</div>
+        <p>Los puntos de telemetría son procesados por el equipo técnico para generar mapas de cobertura. El observador solo debe asegurarse de completar el recorrido y sincronizar los datos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       REFERENCIA RÁPIDA
+  ════════════════════════════════════════ -->
+  <div id="sincronizacion" class="module page-break">
+    <div class="section-header">
+      <div class="section-tag">Referencia Rápida</div>
+      <div class="section-title">Sincronización de Datos</div>
+      <div class="section-desc">Cómo funciona el modo offline y cuándo sincronizar.</div>
+    </div>
+
+    <p>La app está diseñada para funcionar <strong>sin conexión a internet</strong>. Todos los datos se guardan primero en la base de datos local del dispositivo y pueden subirse al servidor cuando haya conectividad disponible.</p>
+
+    <h3>Estados de un registro</h3>
+    <table class="fields-table">
+      <thead>
+        <tr><th>Estado</th><th>Significado</th><th>Acción requerida</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🟡 <strong>Local / Pendiente</strong></td>
+          <td>Guardado en el dispositivo, aún no enviado al servidor.</td>
+          <td>Sincronizar cuando haya conexión.</td>
+        </tr>
+        <tr>
+          <td>🟢 <strong>Sincronizado</strong></td>
+          <td>Enviado y confirmado en el servidor.</td>
+          <td>Ninguna. Los datos están seguros en la nube.</td>
+        </tr>
+        <tr>
+          <td>🔴 <strong>Error de sincronización</strong></td>
+          <td>El envío falló (sin internet o error del servidor).</td>
+          <td>Volver a intentar cuando haya conexión estable.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>¿Dónde sincronizar?</h3>
+    <ul class="nav-list">
+      <li class="nav-item"><span class="nav-dot amber"></span><strong>Módulo Formulario</strong> → Historial de Sesiones → banner naranja → "Subir".</li>
+      <li class="nav-item"><span class="nav-dot green"></span><strong>Módulo Estudio a Bordo</strong> → Inicio de Recorrido → banner ámbar → toque para sincronizar.</li>
+      <li class="nav-item"><span class="nav-dot slate"></span><strong>Módulo Telemetría</strong> → pantalla principal → banner naranja → "Subir".</li>
+    </ul>
+
+    <div class="notice amber">
+      ⚠️ <strong>Recomendación:</strong> Sincronice al final de cada jornada. Aunque los datos están protegidos en el dispositivo, si el teléfono se pierde o daña antes de sincronizar, los datos no podrán recuperarse.
+    </div>
+  </div>
+
+  <!-- ─── GLOSARIO ─── -->
+  <!-- ─── FOOTER ─── -->
+  <div class="doc-footer">
+    <span>App Recolectora NextBus · Manual de Usuario v1.0</span>
+    <span>Uso interno · © 2025 NextBus Logistics</span>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ─── Botón imprimir (solo en pantalla) ─── -->
+<div class="print-bar no-print">
+  <button class="print-btn" onclick="window.print()">
+    🖨️ Guardar / Imprimir PDF
+  </button>
+</div>
+
+</body>
+</html>
